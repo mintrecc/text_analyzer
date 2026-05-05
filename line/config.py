@@ -1,5 +1,5 @@
-delimiters = {' ', ',', '\n', '\t', '.'}
-delimeters_for_sentence = { ',', '-', ':', ';' '.'}
+delimiters = {' ', ',', '\n', '\t', '.', '!', '?'}
+delimiters_for_sentence = {',', ':', ';', '.', '!', '?'}
 
-separate_by_sentence = False
+separate_by_sentence = True
 CASE_SENSITIVE = False

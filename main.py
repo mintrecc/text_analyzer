@@ -1,7 +1,9 @@
-
 import sys
 
+from clining import analysis
 from length.output.printer import *
+from line.config import separate_by_sentence
+from line.parser.tokenizer import tokenize_by_sentence
 
 
 def main():
@@ -23,8 +25,19 @@ def main():
     else:
         text = " ".join(sys.argv[1:])
 
-    words = tokenize(text)
-    print(print_report_in_table(words))
+    if separate_by_sentence:
+        sentences = tokenize_by_sentence(text)
+        print(sentences)
+        for sentence in sentences:
+            words = tokenize(sentence)
+            print("\n")
+            print_report_in_table(words)
+
+
+
+    if not separate_by_sentence:
+        words = tokenize(text)
+        print_report_in_table(words)
 
 if __name__ == '__main__':
     main()
