@@ -4,6 +4,7 @@ import sys
 from length.output.printer import *
 from line.config import separate_by_sentence
 from line.parser.tokenizer import tokenize_by_sentence
+from length.output.export import *
 
 class TextAnalyzer:
     def __init__(self, text):
@@ -51,12 +52,14 @@ class TextAnalyzer:
 
 def main():
 
-    if len(sys.argv) < 1:
+    if len(sys.argv) == 1:
         print('No arguments')
         sys.exit(1)
 
-    if '-f' in sys.argv:
+    elif '-f' in sys.argv:
         if len(sys.argv) == 2:
+            file_name = 'length/data/test.txt'
+        elif len(sys.argv) == 3 and sys.argv[2] == '-o':
             file_name = 'length/data/test.txt'
         else:
             file_name = sys.argv[sys.argv.index('-f') + 1]
@@ -65,18 +68,29 @@ def main():
             text = file.read()
 
     else:
-        text = " ".join(sys.argv[1:])
+        if '-o' in sys.argv:
+            text = " ".join(sys.argv[1:sys.argv.index('-o')])
+        else:
+            text = " ".join(sys.argv[1:])
 
     analyzer = TextAnalyzer(text)
 
+
     if separate_by_sentence:
         sentences_report = analyzer.create_sentence_report()
+        if '-o' in sys.argv:
+            export_report_json(sentences_report)
         for report in sentences_report:
             print("\n")
             print_report_in_table(report)
 
+
+
     if not separate_by_sentence:
+
         full_report = analyzer.create_a_report()
+        if '-o' in sys.argv:
+            export_report_json(full_report)
         print_report_in_table(full_report)
 
 if __name__ == '__main__':
