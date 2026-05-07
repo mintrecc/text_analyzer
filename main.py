@@ -80,6 +80,7 @@ def main():
         sentences_report = analyzer.create_sentence_report()
         if '-o' in sys.argv:
             export_report_json(sentences_report)
+            export_report_csv(sentences_report)
         for report in sentences_report:
             print("\n")
             print_report_in_table(report)
@@ -87,10 +88,10 @@ def main():
 
 
     if not separate_by_sentence:
-
         full_report = analyzer.create_a_report()
         if '-o' in sys.argv:
             export_report_json(full_report)
+            export_report_csv(full_report)
         print_report_in_table(full_report)
 
 if __name__ == '__main__':
